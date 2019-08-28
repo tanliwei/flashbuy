@@ -1,0 +1,1 @@
+A practice on the Flash Buy course.
