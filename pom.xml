@@ -11,6 +11,7 @@
     <modules>
         <module>flashbuy01</module>
         <module>flashbuy02</module>
+        <module>flashbuy03</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

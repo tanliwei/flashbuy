@@ -1,1 +1,1 @@
-A practice on the Flash Buy course.
+A rewrite on the Flash Buy project.
