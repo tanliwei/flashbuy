@@ -5,6 +5,7 @@ package cn.tanlw.flashbuy.result;
  * @Date 2019/8/29 22:08
  */
 public class CodeMsg {
+
     private int code;
     private String msg;
 
@@ -26,6 +27,8 @@ public class CodeMsg {
     // Order Module
 
     // Flash Buy Module
+    public static final CodeMsg FLASHBUY_REPEATED = new CodeMsg(500501,"Can not do the same Flash buy twice");
+    public static final CodeMsg FLASHBUY_OVER = new CodeMsg(500502,"The Flash Buy is over");
 
     private CodeMsg(int code, String msg){
         this.code = code;

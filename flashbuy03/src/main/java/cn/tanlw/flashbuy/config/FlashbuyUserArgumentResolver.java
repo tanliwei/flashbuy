@@ -31,22 +31,7 @@ public class FlashbuyUserArgumentResolver implements HandlerMethodArgumentResolv
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
         
-        String paramToken = request.getParameter(FlashbuyUserService.AUTH_TOKEN);
-        String cookieToken = getCookieValue(request, FlashbuyUserService.AUTH_TOKEN);
-        if(StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)){
-            return null;
-        }
-        String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
-        return flashbuyUserService.getByToken(response, token);
+        return request.getAttribute(FlashbuyUserService.AUTH_TOKEN);
     }
 
-    private String getCookieValue(HttpServletRequest request, String authToken) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies){
-            if (cookie.getName().equals(authToken)) {
-                return cookie.getValue();
-            }
-        }
-        return null;
-    }
 }

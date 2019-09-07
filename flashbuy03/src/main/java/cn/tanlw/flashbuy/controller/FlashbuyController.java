@@ -1,0 +1,54 @@
+package cn.tanlw.flashbuy.controller;
+
+import cn.tanlw.flashbuy.domain.FlashbuyOrder;
+import cn.tanlw.flashbuy.domain.FlashbuyUser;
+import cn.tanlw.flashbuy.domain.OrderInfo;
+import cn.tanlw.flashbuy.result.CodeMsg;
+import cn.tanlw.flashbuy.service.FlashbuyService;
+import cn.tanlw.flashbuy.service.GoodsService;
+import cn.tanlw.flashbuy.service.OrderService;
+import cn.tanlw.flashbuy.vo.GoodsVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+@RequestMapping("/flashbuy")
+public class FlashbuyController {
+
+    public static final String FLASHBUY_FAIL = "flashbuy_fail";
+    public static final String ORDER_DETAIL = "order_detail";
+    @Autowired
+    private GoodsService goodsService;
+    @Autowired
+    private FlashbuyService flashbuyService;
+    @Autowired
+    private OrderService orderService;
+
+    @PostMapping("/do_flashbuy")
+    public String doFlashbuy(Model model, FlashbuyUser flashbuyUser,
+    @RequestParam("goodsId")long goodsId){
+        //Checking the stock
+        GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
+        Integer stockCount = goods.getStockCount();
+        if(stockCount <= 0){
+            model.addAttribute("errMsg", CodeMsg.FLASHBUY_OVER.getMsg());
+            return FLASHBUY_FAIL;
+        }
+        //Checking whether done the flash buy
+        FlashbuyOrder order = orderService.getFlashbuyOrderByUserIdGoodsId(flashbuyUser.getId(),
+                goodsId);
+        if (order != null) {
+            model.addAttribute("errMsg", CodeMsg.FLASHBUY_REPEATED.getMsg());
+            return FLASHBUY_FAIL;
+        }
+        //Decrease the stock, make the order, insert a record into the FlashbuyOrder
+        OrderInfo orderInfo = flashbuyService.flashbuy(flashbuyUser, goods);
+        model.addAttribute("orderInfo", orderInfo);
+        model.addAttribute("goods", goods);
+        return ORDER_DETAIL;
+    }
+}

@@ -1,6 +1,7 @@
 package cn.tanlw.flashbuy.service;
 
 import cn.tanlw.flashbuy.dao.GoodsDao;
+import cn.tanlw.flashbuy.domain.FlashbuyGoods;
 import cn.tanlw.flashbuy.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,11 @@ public class GoodsService {
         }
         model.addAttribute("flashbuyStatus", flashbuyStatus);
         model.addAttribute("remainSeconds", remainSeconds);
+    }
+
+    public void reduceStock(GoodsVo goods) {
+        FlashbuyGoods update = new FlashbuyGoods();
+        update.setGoodsId(goods.getId());
+        goodsDao.reduceStock(update);
     }
 }
