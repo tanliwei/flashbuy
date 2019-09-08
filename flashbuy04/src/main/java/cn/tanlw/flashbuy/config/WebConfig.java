@@ -1,0 +1,30 @@
+package cn.tanlw.flashbuy.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.List;
+
+@Configuration
+public class WebConfig extends WebMvcConfigurerAdapter {
+    @Autowired
+    FlashbuyUserArgumentResolver argumentResolver;
+    @Autowired
+    AuthInterceptor authInterceptor;
+   
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(argumentResolver);
+    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authInterceptor).addPathPatterns(
+                "/flashbuy/**","/goods/**","/user/**","/prepare/**")
+                .excludePathPatterns("/login","/verify");
+        super.addInterceptors(registry);
+    }
+}
