@@ -106,3 +106,10 @@ nohup java -jar flashbuy04.jar --spring.profiles.active=prod &
 拓展:压缩文件的命令为如下
 
 输入: tar -cf 要压缩的文件名.tar *
+
+cat /proc/cpuinfo | grep processor
+
+load average: 21, 6, 2
+one processor
+
+ps -ef | grep java
