@@ -6,6 +6,7 @@ JMeter
 
 #100个并发连接， 100000个请求
 redis-benchmark -h 127.0.0.1 -p 6379 -c 100 -n 100000
+
 #存取大小为100字节的数据包
 redis-benchmark -h 127.0.0.1 -p 6379 -q -d 100
 https://www.alibabacloud.com/help/faq-detail/38689.htm
@@ -85,3 +86,31 @@ Caused by: java.net.SocketException: Connection reset
 	... 55 more
 2019-09-07 23:02:55.071  INFO 24364 --- [io-8077-exec-83] c.t.flashbuy.controller.UserController   : list, user:cn.tanlw.flashbuy.domain.FlashbuyUser@2faadbb3
 2
+
+
+nohup java -jar flashbuy04.jar --spring.profiles.active=prod &
+
+在linux中如何解压.tgz
+
+1，进入下载路径下，
+
+输入命令： cd Downloads
+
+2，解压到当前文件夹
+
+输入：tar zxvf  文件名.tgz -C ./     比如我的是：tar zxvf simple-examples.tgz -C ./
+
+3，解压到指定文件夹下
+
+输入：tar  zxvf  文件名.tgz  -C /指定路径
+
+拓展:压缩文件的命令为如下
+
+输入: tar -cf 要压缩的文件名.tar *
+
+cat /proc/cpuinfo | grep processor
+
+load average: 21, 6, 2
+one processor
+
+ps -ef | grep java

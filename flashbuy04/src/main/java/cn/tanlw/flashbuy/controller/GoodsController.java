@@ -26,7 +26,14 @@ public class GoodsController {
     RedisService redisService;
     @Autowired
     GoodsService goodsService;
-    
+
+    /**
+     * QPS: 432
+     * 1000 * 10
+     * @param model
+     * @param user
+     * @return
+     */
     @RequestMapping("/to_list")
     public String list(Model model, FlashbuyUser user){
         log.info("list, user:"+user.toString());
