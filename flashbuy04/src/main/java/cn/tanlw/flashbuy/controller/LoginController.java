@@ -33,10 +33,10 @@ public class LoginController {
     
     @RequestMapping("/do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
+    public Result<String> doLogin(HttpServletResponse response, @Valid LoginVo loginVo){
         log.info("doLogin"+loginVo.toString());
         //Login 
-        flashbuyUserService.login(response, loginVo);
-        return Result.success(true);
+        String ret = flashbuyUserService.login(response, loginVo);
+        return Result.success(ret);
     }
 }

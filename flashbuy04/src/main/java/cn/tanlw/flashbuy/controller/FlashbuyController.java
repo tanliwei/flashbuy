@@ -31,6 +31,19 @@ public class FlashbuyController {
     @Autowired
     private OrderService orderService;
 
+
+    /**
+     * 逻辑6 cores， 16GB 本机 测试结果：
+     * 吞吐量59.7/sec, 1000线程 * 10次循环； 100个商品 ，“卖出了”177个，超卖77个; 
+     *
+     * 1 core 2GB 阿里云（redis 和 mysql 在同一机器） 测试结果：
+     * 吞吐量68.7/sec, 1000线程 * 10次循环； 100个商品 ，“卖出了”108个，超卖8个; 
+     *
+     * @param model
+     * @param flashbuyUser
+     * @param goodsId
+     * @return
+     */
     @PostMapping("/do_flashbuy")
     public String doFlashbuy(Model model, FlashbuyUser flashbuyUser,
     @RequestParam("goodsId")long goodsId){

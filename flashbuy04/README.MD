@@ -1,6 +1,7 @@
 JMeter
 1 录好jmx
 2 sh jmeter.sh -n -t XXX.jmx -l result.jtl
+/opt/apache-jmeter-5.1.1/bin/jmeter.sh -n -t do_flashbuy_04_4_linux.jmx -l do_flash_04_4.jtl
 3 导入 jmeter
 
 #100个并发连接， 100000个请求
