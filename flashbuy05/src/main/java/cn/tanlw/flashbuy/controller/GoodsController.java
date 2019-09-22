@@ -3,8 +3,10 @@ package cn.tanlw.flashbuy.controller;
 import cn.tanlw.flashbuy.domain.FlashbuyUser;
 import cn.tanlw.flashbuy.redis.GoodsKey;
 import cn.tanlw.flashbuy.redis.RedisService;
+import cn.tanlw.flashbuy.result.Result;
 import cn.tanlw.flashbuy.service.FlashbuyUserService;
 import cn.tanlw.flashbuy.service.GoodsService;
+import cn.tanlw.flashbuy.vo.GoodsDetailVo;
 import cn.tanlw.flashbuy.vo.GoodsVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -72,9 +74,32 @@ public class GoodsController {
     }
     
 
-    @RequestMapping(value = "/to_detail/{goodsId}", produces = "text/html")
+    @RequestMapping(value = "/detail/{goodsId}")
     @ResponseBody
-    public String detail(HttpServletRequest request, HttpServletResponse response,
+    public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response,
+                                        Model model, FlashbuyUser user, @PathVariable("goodsId") long goodsId){
+        log.info("detail, user:"+user.toString()+" goodsId:"+goodsId);
+        //Query cache
+//        String html = redisService.get(GoodsKey.getGoodsDetail, ""+goodsId, String.class);
+//        if(!StringUtils.isEmpty(html)){
+//            return html;
+//        }
+        GoodsDetailVo detail = goodsService.getDetail(model, goodsId, user);
+//        return new Result<GoodsDetailVo>(detail);//error
+        return Result.success(detail);
+//        SpringWebContext ctx = new SpringWebContext(request, response, request.getServletContext(),
+//                request.getLocale(), model.asMap(), applicationContext);
+//        html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", ctx);
+//        if (!StringUtils.isEmpty(html)) {
+//            redisService.set(GoodsKey.getGoodsDetail, ""+goodsId, html);
+//        }
+//        return html;
+//        return "goods_detail";
+    }
+
+    @RequestMapping(value = "/to_detail_bak/{goodsId}", produces = "text/html")
+    @ResponseBody
+    public String detailBAK(HttpServletRequest request, HttpServletResponse response,
                          Model model, FlashbuyUser user, @PathVariable("goodsId") long goodsId){
         log.info("detail, user:"+user.toString()+" goodsId:"+goodsId);
         model.addAttribute("user", user);
@@ -83,7 +108,7 @@ public class GoodsController {
         if(!StringUtils.isEmpty(html)){
             return html;
         }
-        goodsService.getDetail(model, goodsId);
+        goodsService.getDetail(model, goodsId, user);
         SpringWebContext ctx = new SpringWebContext(request, response, request.getServletContext(),
                 request.getLocale(), model.asMap(), applicationContext);
         html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", ctx);

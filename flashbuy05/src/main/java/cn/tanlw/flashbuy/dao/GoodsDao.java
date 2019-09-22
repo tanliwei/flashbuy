@@ -2,10 +2,7 @@ package cn.tanlw.flashbuy.dao;
 
 import cn.tanlw.flashbuy.domain.FlashbuyGoods;
 import cn.tanlw.flashbuy.vo.GoodsVo;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -23,6 +20,6 @@ public interface GoodsDao {
             "where g.id = #{goodsId}")
     GoodsVo getGoodsVoByGoodsId(@Param("goodsId")long goodsId);
 
-    @Update("update flashbuy_goods set stock_count = stock_count - 1 where goods_id = #{goodsId}")
+    @Update("update flashbuy_goods set stock_count = stock_count - 1 where goods_id = #{goodsId} and stock_count > 0")
     public int reduceStock(FlashbuyGoods g);
 }

@@ -9,12 +9,12 @@ public class CodeMsg {
     private int code;
     private String msg;
 
-    //General Exception
+    //General Exception  5001XX
     public static CodeMsg SUCCESS = new CodeMsg(0, "Success");
     public static CodeMsg SERVER_ERROR = new CodeMsg(500100, "Internal Server Error");
     public static CodeMsg BIND_ERROR = new CodeMsg(500101, "参数校验异常：%s");
 
-    // Login Module
+    // Login Module  5002XX
     public static CodeMsg SESSION_ERROR = new CodeMsg(500210, "Session不存在或者已经失效");
     public static CodeMsg PASSWORD_EMPTY = new CodeMsg(500211, "登录密码不能为空");
     public static CodeMsg MOBILE_EMPTY = new CodeMsg(500212, "手机号不能为空");
@@ -24,9 +24,10 @@ public class CodeMsg {
 
     // Goods Module
 
-    // Order Module
+    // Order Module  5004XX
+    public static CodeMsg ORDER_NOT_EXIST = new CodeMsg(500400, "Order is not exists");
 
-    // Flash Buy Module
+    // Flash Buy Module  5005XX
     public static final CodeMsg FLASHBUY_REPEATED = new CodeMsg(500501,"Can not do the same Flash buy twice");
     public static final CodeMsg FLASHBUY_OVER = new CodeMsg(500502,"The Flash Buy is over");
 

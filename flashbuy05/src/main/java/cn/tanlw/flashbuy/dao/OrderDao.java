@@ -22,4 +22,7 @@ public interface OrderDao {
     @Insert("insert into flashbuy_order (user_id, goods_id, order_id)" +
             " values(#{userId}, #{goodsId}, #{orderId})")
     public int insertFlashbuyOrder(FlashbuyOrder FlashbuyOrder);
+
+    @Select("select * from order_info where id = #{orderId}")
+    OrderInfo getOrderById(long orderId);
 }

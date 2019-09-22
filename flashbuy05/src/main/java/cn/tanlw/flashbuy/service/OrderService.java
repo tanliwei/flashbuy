@@ -4,6 +4,8 @@ import cn.tanlw.flashbuy.dao.OrderDao;
 import cn.tanlw.flashbuy.domain.FlashbuyOrder;
 import cn.tanlw.flashbuy.domain.FlashbuyUser;
 import cn.tanlw.flashbuy.domain.OrderInfo;
+import cn.tanlw.flashbuy.redis.OrderKey;
+import cn.tanlw.flashbuy.redis.RedisService;
 import cn.tanlw.flashbuy.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,18 @@ import java.util.Date;
 public class OrderService {
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private RedisService redisService;
     public FlashbuyOrder getFlashbuyOrderByUserIdGoodsId(long userId, long goodsId){
-        return orderDao.getFlashbuyOrderByUserIdGoodsId(userId, goodsId);
+        return redisService.get(OrderKey.getFlashbuyOrderByUidGid, getKey(userId, goodsId), FlashbuyOrder.class);
     }
-    @Transactional
+
+    private static String getKey(long userId, long goodsId) {
+        return userId+"_"+goodsId;
+    }
+
+    //TODO 这个Transactional 实验过 能回滚 可以不用， 待进一步分析验证
+//    @Transactional
     public OrderInfo createOrder(FlashbuyUser flashbuyUser, GoodsVo goods) {
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setCreateDate(new Date());
@@ -37,6 +47,12 @@ public class OrderService {
         flashbuyOrder.setOrderId(orderInfo.getId());
         flashbuyOrder.setUserId(flashbuyUser.getId());
         orderDao.insertFlashbuyOrder(flashbuyOrder);
+
+        redisService.set(OrderKey.getFlashbuyOrderByUidGid, getKey(flashbuyUser.getId(), goods.getId()), flashbuyOrder);
         return orderInfo;
+    }
+
+    public OrderInfo getOrderById(long orderId) {
+        return orderDao.getOrderById(orderId);
     }
 }

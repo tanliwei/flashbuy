@@ -2,6 +2,8 @@ package cn.tanlw.flashbuy.service;
 
 import cn.tanlw.flashbuy.dao.GoodsDao;
 import cn.tanlw.flashbuy.domain.FlashbuyGoods;
+import cn.tanlw.flashbuy.domain.FlashbuyUser;
+import cn.tanlw.flashbuy.vo.GoodsDetailVo;
 import cn.tanlw.flashbuy.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +28,13 @@ public class GoodsService {
         return goodsDao.getGoodsVoByGoodsId(goodsId);
     }
 
-    public void getDetail(Model model, long goodsId) {
+    public GoodsDetailVo getDetail(Model model, long goodsId, FlashbuyUser flashbuyUser) {
         
         GoodsVo goods = getGoodsVoByGoodsId(goodsId);
-        model.addAttribute("goods", goods);
+        GoodsDetailVo goodsDetailVo = new GoodsDetailVo();
+        goodsDetailVo.setGoods(goods);
+        goodsDetailVo.setUser(flashbuyUser);
+//        model.addAttribute("goods", goods);
         long startAt = goods.getStartDate().getTime();
         long endAt = goods.getEndDate().getTime();
         long now = System.currentTimeMillis();
@@ -46,13 +51,16 @@ public class GoodsService {
             flashbuyStatus = ONGOING;
             remainSeconds = 0;
         }
-        model.addAttribute("flashbuyStatus", flashbuyStatus);
-        model.addAttribute("remainSeconds", remainSeconds);
+//        model.addAttribute("flashbuyStatus", flashbuyStatus);
+//        model.addAttribute("remainSeconds", remainSeconds);
+        goodsDetailVo.setFlashbuyStatus(flashbuyStatus);
+        goodsDetailVo.setRemainSeconds(remainSeconds);
+        return goodsDetailVo;
     }
 
-    public void reduceStock(GoodsVo goods) {
+    public int reduceStock(GoodsVo goods) {
         FlashbuyGoods update = new FlashbuyGoods();
         update.setGoodsId(goods.getId());
-        goodsDao.reduceStock(update);
+        return goodsDao.reduceStock(update);
     }
 }

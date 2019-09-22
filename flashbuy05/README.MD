@@ -7,9 +7,18 @@
 
 更新MySql， 更新的字段越多，产生的BinLog越多  
 
+Status Code: 304   
+检查是否有更改Last-Modified: Sun, 22 Sep 2019 12:51:57 GMT  
+没有更改 则使用浏览器缓存的内容  
 
+Pragma http1.0  
+Expire http1.1 服务端 标准时间  
+Cache-control 客户端直接计算 单位秒   
 
+Chrome max-age=0，  
+Firefox  
 
+出现过 发起 1000 * 10 个请求 在最后几百个请求的实时 卡顿住几分钟！  
 
 用5000个token 压测 to_list接口  throw Exceptions redis.timeout=10000  
 改成 redis.timeout=10000好一些，但是压下来也就 30+的QPS, 逻辑6 cores， 16GB 本机测试结果    

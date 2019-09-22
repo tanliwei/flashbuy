@@ -16,6 +16,17 @@ public class FlashbuyService {
     @Transactional
     public OrderInfo flashbuy(FlashbuyUser flashbuyUser, GoodsVo goods) {
         //Decrease the stock, make the order, insert a record into FlashbuyOrder
+        int i = goodsService.reduceStock(goods);
+        if (i<=0){
+            throw new RuntimeException("Flashbuy fails");
+        }
+        //Get the orderInfo and flashbuyOrder;
+        return orderService.createOrder(flashbuyUser, goods);
+    }
+
+    @Transactional
+    public OrderInfo flashbuyBAK(FlashbuyUser flashbuyUser, GoodsVo goods) {
+        //Decrease the stock, make the order, insert a record into FlashbuyOrder
         goodsService.reduceStock(goods);
         //Get the orderInfo and flashbuyOrder;
         return orderService.createOrder(flashbuyUser, goods);
