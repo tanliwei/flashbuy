@@ -1,17 +1,17 @@
-JMeter
-1 录好jmx
-2 sh jmeter.sh -n -t XXX.jmx -l result.jtl
-/opt/apache-jmeter-5.1.1/bin/jmeter.sh -n -t do_flashbuy_04_4_linux.jmx -l do_flash_04_4.jtl
+JMeter  
+1 录好jmx  
+2 sh jmeter.sh -n -t XXX.jmx -l result.jtl  
+/opt/apache-jmeter-5.1.1/bin/jmeter.sh -n -t do_flashbuy_04_4_linux.jmx -l do_flash_04_4.jtl  
 3 导入 jmeter
 
-#100个并发连接， 100000个请求
+--100个并发连接， 100000个请求  
 redis-benchmark -h 127.0.0.1 -p 6379 -c 100 -n 100000
 
-#存取大小为100字节的数据包
-redis-benchmark -h 127.0.0.1 -p 6379 -q -d 100
+--存取大小为100字节的数据包  
+redis-benchmark -h 127.0.0.1 -p 6379 -q -d 100  
 https://www.alibabacloud.com/help/faq-detail/38689.htm
 
-redis-benchmark -t set,lpush -n 100000 -q
+redis-benchmark -t set,lpush -n 100000 -q 
 
 redis-benchmark -n 100000 -q script load "redis.call('set', 'name','daniel')"
 
@@ -110,7 +110,7 @@ nohup java -jar flashbuy04.jar --spring.profiles.active=prod &
 
 cat /proc/cpuinfo | grep processor
 
-load average: 21, 6, 2
+load average: 21, 6, 2  
 one processor
 
 ps -ef | grep java
