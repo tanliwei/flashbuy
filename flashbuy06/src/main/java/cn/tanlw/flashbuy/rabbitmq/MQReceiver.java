@@ -54,4 +54,19 @@ public class MQReceiver {
 //        flashbuyService.flashbuy(user, goodsVo);
 
     }
+
+    @RabbitListener(queues = MQConfig.TOPIC_QUEUE1)
+    public void recieveTopic1(String topicMessage){
+        log.info("Receive topic1 message:"+topicMessage);
+    }
+
+    @RabbitListener(queues = MQConfig.TOPIC_QUEUE2)
+    public void recieveTopic2(String topicMessage){
+        log.info("Receive topic2 message:"+topicMessage);
+    }
+
+    @RabbitListener(queues = MQConfig.HEADERS_QUEUE)
+    public void recieveHeaders(byte[] headersMessage){
+        log.info("Receive Headers message:"+ new String(headersMessage));
+    }
 }

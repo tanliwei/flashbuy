@@ -45,4 +45,25 @@ public class DemoController {
         mqSender.send("Hello RabbitMQ!");
         return Result.success("Success");
     }
+
+    @RequestMapping("/mqtopic")
+    @ResponseBody
+    public Result<String> mqSendTopic(){
+        mqSender.sendTopicMessage("Hello RabbitMQ! TOPIC");
+        return Result.success("Success");
+    }
+
+    @RequestMapping("/mqfanout")
+    @ResponseBody
+    public Result<String> mqSendFanout(){
+        mqSender.sendFanout("Hello RabbitMQ! Fanout");
+        return Result.success("Success");
+    }
+
+    @RequestMapping("/mqheaders")
+    @ResponseBody
+    public Result<String> mqSendHeaders(){
+        mqSender.sendHeaders("Hello RabbitMQ! Headers");
+        return Result.success("Success");
+    }
 }
