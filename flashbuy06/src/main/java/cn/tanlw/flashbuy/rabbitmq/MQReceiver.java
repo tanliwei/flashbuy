@@ -35,23 +35,23 @@ public class MQReceiver {
     @RabbitListener(queues = MQConfig.FLASHBUY_QUEUE)
     public void receive(String queueMessage){
         log.info("Receive queueMessage:"+queueMessage);
-//        FlashbuyMessage flashbuyMessage = RedisService.stringToBean(queueMessage, FlashbuyMessage.class);
-//        FlashbuyUser user = flashbuyMessage.getUser();
-//        long goodsId = flashbuyMessage.getGoodsId();
-//        GoodsVo goodsVo = goodsService.getGoodsVoByGoodsId(goodsId);
-//        Integer stockCount = goodsVo.getStockCount();
-//        if(stockCount < 0){
-//            log.info("商品库存不足 goodsId:"+goodsId);
-//            return ;
-//        }
-//        //是否秒杀成功
-//        FlashbuyOrder order = orderService.getFlashbuyOrderByUserIdGoodsId(user.getId(), goodsId);
-//        if(order!= null){
-//            log.info("秒杀成功 userId:"+user.getId()+"_ goodsId:"+goodsId);
-//            return;
-//        }
+        FlashbuyMessage flashbuyMessage = RedisService.stringToBean(queueMessage, FlashbuyMessage.class);
+        FlashbuyUser user = flashbuyMessage.getUser();
+        long goodsId = flashbuyMessage.getGoodsId();
+        GoodsVo goodsVo = goodsService.getGoodsVoByGoodsId(goodsId);
+        Integer stockCount = goodsVo.getStockCount();
+        if(stockCount < 0){
+            log.info("商品库存不足 goodsId:"+goodsId);
+            return ;
+        }
+        //是否秒杀成功
+        FlashbuyOrder order = orderService.getFlashbuyOrderByUserIdGoodsId(user.getId(), goodsId);
+        if(order!= null){
+            log.info("秒杀成功 userId:"+user.getId()+"_ goodsId:"+goodsId);
+            return;
+        }
 //        //减库存 下订单 写入秒杀订单
-//        flashbuyService.flashbuy(user, goodsVo);
+        flashbuyService.doFlashbuy(user, goodsVo);
 
     }
 

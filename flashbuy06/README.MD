@@ -4,6 +4,7 @@
 3. 请求先入队列缓存，异步下单，增强用户体验  
 4. RabbitMQ安装与Spring Boot集成  
 5. Nginx水平扩展
+  反向代理，负载均衡，缓存，LVS->M Nginx->N Tomcat  
 6. 压测  
 
 Mycat 分库分表中间件  

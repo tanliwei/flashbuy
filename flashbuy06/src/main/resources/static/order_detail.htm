@@ -81,6 +81,7 @@ $(function(){
 })
 
 function getOrderDetail(){
+    //Check user
     var orderId = g_getQueryString("orderId");
     $.ajax({
         url:"/order/detail",

@@ -26,9 +26,9 @@ public class MQSender {
         amqpTemplate.convertAndSend(MQConfig.FLASHBUY_QUEUE, queueMessage);
     }
 
-    public void sendFlashbuyMessage(FlashbuyMessage queueMessage){
-        String msg = RedisService.beanToString(queueMessage);
-        log.info("Send queueMessage:" + msg);
+    public void sendFlashbuyMessage(FlashbuyMessage flashbuyMessage){
+        String msg = RedisService.beanToString(flashbuyMessage);
+        log.info("Send flashbuy message:" + msg);
         amqpTemplate.convertAndSend(MQConfig.FLASHBUY_QUEUE, msg);
     }
 

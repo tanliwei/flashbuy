@@ -40,7 +40,7 @@
          <td id="startTime"></td>
          <td >
              <input type="hidden" id="remainSeconds" />
-             <span id="miaoshaTip"></span>
+             <span id="flashbuyTip"></span>
          </td>
         <td>
         	<!--<form id="flashbuyForm" method="post" action="/flashbuy/do_flashbuy">-->
@@ -69,7 +69,45 @@
 </body>
 <script>
 
+function getFlashbuyResult(goodsId){
+    console.log("getFlashbuyResult goodsId:"+goodsId);
+    g_showLoading();
+    $.ajax({
+        url:"/flashbuy/result",
+        type:"GET",
+        data:{
+            goodsId:goodsId,
+        },
+        success:function (data) {
+            if(data.code==0){
+                var result = data.data;
+                if(result<0){
+                    layer.msg("Flashbuy fails");
+                }else if(result == 0){
+                    setTimeout(function () {
+                        getFlashbuyResult(goodsId);
+                    }, 200);
+                }else{
+                    layer.confirm("Congratulations, flash buy success, check your order now?",
+                        {btn:["Yes","Cancel"]},
+                    function () {
+                        window.location.href="order_detail.htm?orderId="+result;
+                    },
+                    function () {
+                        layer.closeAll();
+                    })
+                }
+            }else{
+                layer.msg(data.msg);
+            }
+        },
+        error:function () {
+            layer.msg("Bad client request");
+        }
+    });
+}
 function doFlashbuy() {
+    console.log("getFlashbuyResult goodsId:"+$("#goodsId").val());
     $.ajax({
         url:"/flashbuy/do_flashbuy",
         type:"POST",
@@ -78,7 +116,7 @@ function doFlashbuy() {
         },
         success:function(data){
             if(data.code == 0){
-                window.location.href="/order_detail.htm?orderId="+data.data.id;
+                getFlashbuyResult($("#goodsId").val());
             }else{
                 layer.msg(data.msg);
             }
@@ -122,6 +160,9 @@ function getDetail() {
             }else{
                 layer.msg(data.msg);
             }
+        },
+        error:function () {
+            layer.msg("Bad client request");
         }
     });
 }
@@ -131,6 +172,7 @@ function countDown() {
     var timeout;
     if(remainSeconds > 0) {
         $("#buyButton").attr("disable", true);
+        $("#flashbuyTip").html("秒杀倒计时:" + remainSeconds + "秒");
         timeout = setTimeout(function(){
             $("#countDown").text(remainSeconds - 1);
             $("#remainSeconds").val(remainSeconds - 1);
@@ -138,13 +180,13 @@ function countDown() {
         }, 1000);
     } else if(remainSeconds == 0){
         $("#buyButton").attr("disable", false);
-        if(timeout){
-            clearTimeout(timeout);
-        }
-        $("flashbuyTip").html("Flash buy is ongoing");
+        // if(timeout){
+        //     clearTimeout(timeout);
+        // }
+        $("#flashbuyTip").html("Flash buy is ongoing");
     } else {
         $("#buyButton").attr("disable", true);
-        $("flashbuyTip").html("Flash buy is over");
+        $("#flashbuyTip").html("Flash buy is over");
     }
 }
 
