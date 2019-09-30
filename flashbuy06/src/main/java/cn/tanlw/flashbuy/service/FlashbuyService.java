@@ -35,7 +35,7 @@ public class FlashbuyService implements InitializingBean{
 
 
     /**
-     * 逻辑6 cores， 16GB 本机 测试结果：
+     * 逻辑6 cores， 16GB 应用(jar)在本机 的测试结果(redis, rabbitmq, mysql 在阿里云1核2G的云服务器的容器内)：
      * 吞吐量162.6/sec, 1000线程 * 10次循环； 95个商品 ，无超卖;
      * 是原来的2.7倍
      */
@@ -67,10 +67,10 @@ public class FlashbuyService implements InitializingBean{
     }
 
     /**
-     * 逻辑6 cores， 16GB 本机 测试结果：
+     * 逻辑6 cores， 16GB 应用(jar)在本机 的测试结果(redis, rabbitmq, mysql 在阿里云1核2G的云服务器的容器内)：
      * 吞吐量59.7/sec, 1000线程 * 10次循环； 100个商品 ，“卖出了”177个，超卖77个;
      *
-     * 1 core 2GB 阿里云（redis 和 mysql 在同一机器） 测试结果：
+     * 1 core 2GB 阿里云（jar, redis, rabbitmq, mysql 都在阿里云上） 测试结果：
      * 吞吐量68.7/sec, 1000线程 * 10次循环； 100个商品 ，“卖出了”108个，超卖8个;
      *
      * @param flashbuyUser
