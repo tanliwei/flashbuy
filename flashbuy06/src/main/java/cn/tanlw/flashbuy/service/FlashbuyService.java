@@ -34,6 +34,11 @@ public class FlashbuyService implements InitializingBean{
     private HashMap<Long, Boolean> goodsFlashbuyOverFlags = new HashMap<>();
 
 
+    /**
+     * 逻辑6 cores， 16GB 本机 测试结果：
+     * 吞吐量162.6/sec, 1000线程 * 10次循环； 95个商品 ，无超卖;
+     * 是原来的2.7倍
+     */
     @Transactional
     public Result<Integer> preFlashbuy(FlashbuyUser flashbuyUser, Long goodsId) {
         //Checking the stock
