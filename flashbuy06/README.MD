@@ -19,3 +19,8 @@ Mycat 分库分表中间件
 Rabbitmq管理后台 http://IPADDRESS:15672/  
 秒杀的业务特点，大量的用户重复请求，即可能是用户点击请求，也可能是刷的    
 发送者发消息 -> 交换机 -> Queue  
+
+SpringBoot2使用Druid开启监控  
+https://blog.csdn.net/yhflyl/article/details/81228669
+
+Redis监控工具  
