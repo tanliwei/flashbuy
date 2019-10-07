@@ -53,7 +53,7 @@ public class FlashbuyService implements InitializingBean{
         if (goodsId == null) {
             return Result.error(CodeMsg.REQUEST_ILLEAGAL);
         }
-        Long correctPath = redisService.get(FlashbuyKey.getFlashbuyPath, flashbuyUser.getId() + "_" + goodsId, Long.class);
+        String correctPath = redisService.get(FlashbuyKey.getFlashbuyPath, flashbuyUser.getId() + "_" + goodsId, String.class);
         if (!correctPath.equals(path)) {
             return Result.error(CodeMsg.REQUEST_ILLEAGAL);
         }
@@ -173,7 +173,7 @@ public class FlashbuyService implements InitializingBean{
         if(goodsId <=0 )
             return false;
         Long correctCode = redisService.get(FlashbuyKey.getFlashbuyVerifyCode, user.getId() + "_" + goodsId, Long.class);
-        if (correctCode == null || !(correctCode.equals(verifyCode))) {
+        if (correctCode == null || !(correctCode.equals(new Long(verifyCode)))) {
             return false;
         }
         //资源回收 资源有限

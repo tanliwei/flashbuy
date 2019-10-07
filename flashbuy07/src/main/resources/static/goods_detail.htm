@@ -142,7 +142,7 @@ function getFlashbuyResult(goodsId){
 function doFlashbuy(path) {
     console.log("getFlashbuyResult goodsId:"+$("#goodsId").val());
     $.ajax({
-        url:"/flashbuy/"+path+"do_flashbuy",
+        url:"/flashbuy/"+path+"/do_flashbuy",
         type:"POST",
         data:{
             goodsId:$("#goodsId").val(),
@@ -219,7 +219,7 @@ function countDown() {
         $("#flashbuyTip").html("Flash buy is ongoing");
         $("#verifyCodeImg").attr("src", "/flashbuy/verifyCode?goodsId="+$("#goodsId").val());
         $("#verifyCodeImg").show();
-        $("#verfiyCode").show();
+        $("#verifyCode").show();
     } else {
         $("#buyButton").attr("disable", true);
         $("#flashbuyTip").html("Flash buy is over");

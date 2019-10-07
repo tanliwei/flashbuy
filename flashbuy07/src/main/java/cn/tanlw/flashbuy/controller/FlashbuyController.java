@@ -39,7 +39,7 @@ public class FlashbuyController {
     @ResponseBody
     public Result<Integer> doFlashbuy(Model model, FlashbuyUser flashbuyUser,
                                         @RequestParam("goodsId")long goodsId,
-                                      @PathParam("path") String path){
+                                      @PathVariable("path") String path){
         Log.info("doFlashbuy, goodsId:"+goodsId+", user:"+flashbuyUser.toString());
 
         //Decrease the stock, make the order, insert a record into the FlashbuyOrder
